@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* ===== GLOMA brand colors (from your logo) ===== */
+@theme {
+  --color-navy: #0f2747;
+  --color-navy-light: #1c3a63;
+  --color-gold: #c8941f;
+  --color-gold-light: #e0b04a;
+  --color-cream: #f7f5f1;
+
+  --font-display: "Poppins", system-ui, sans-serif;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-display);
+  background-color: var(--color-cream);
+  color: var(--color-navy);
+  margin: 0;
+}
+
+/* A reusable gold gradient text helper */
+.text-gradient {
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
