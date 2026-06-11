@@ -20,7 +20,7 @@ export default function WorkCard({ work }) {
       <TiltCard className="cursor-pointer h-full" onClick={() => setOpen(true)}>
         <div
           onClick={() => setOpen(true)}
-          className="group relative h-full rounded-2xl overflow-hidden bg-navy shadow-lg"
+          className="group relative h-full rounded-2xl overflow-hidden bg-charcoal border border-white/10 shadow-lg"
           style={{ transform: 'translateZ(0)' }}
         >
           {/* Cover */}

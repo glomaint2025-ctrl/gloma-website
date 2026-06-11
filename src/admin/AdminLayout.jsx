@@ -24,7 +24,7 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex">
+    <div className="min-h-screen bg-cream text-ink flex">
       {/* Sidebar */}
       <aside
         className={`fixed md:static z-40 inset-y-0 left-0 w-64 bg-navy-deep text-white flex flex-col transition-transform ${

@@ -1,16 +1,27 @@
 @import "tailwindcss";
 
-/* ===== GLOMA brand colors (from your logo) ===== */
+/* ===== GLOMA dark design system (gold on near-black) ===== */
 @theme {
+  /* Dark surfaces */
+  --color-black-deep: #020202;
+  --color-black: #050505;
+  --color-charcoal: #0a0a0a;
+  --color-mid: #151515;
+  --color-soft: #8b8b8b;
+
+  /* Brand accent */
+  --color-gold: #c8941f;
+  --color-gold-light: #e8c468;
+
+  /* Light tokens (still used by the admin dashboard) */
   --color-navy: #0b1f3a;
   --color-navy-deep: #071528;
   --color-navy-light: #1c3a63;
-  --color-gold: #c8941f;
-  --color-gold-light: #e8c468;
   --color-cream: #f7f5f1;
   --color-ink: #0e1726;
 
-  --font-display: "Poppins", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-heading: "Outfit", sans-serif;
 }
 
 * {
@@ -24,13 +35,28 @@ body {
 
 body {
   font-family: var(--font-display);
-  background-color: var(--color-cream);
-  color: var(--color-ink);
+  background-color: var(--color-black);
+  color: #fff;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-/* ===== Reusable premium helpers ===== */
+/* Big bold display headings everywhere */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* ===== Premium helpers ===== */
+
+/* Small uppercase gold label above section titles */
+.section-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
 
 /* Gold gradient text */
 .text-gradient {
@@ -40,45 +66,53 @@ body {
   color: transparent;
 }
 
-/* Animated aurora gradient used behind the hero */
+/* Soft glowing color wash used behind dark sections */
 .aurora {
   background:
-    radial-gradient(40% 50% at 20% 20%, rgba(200, 148, 31, 0.25), transparent 70%),
-    radial-gradient(40% 50% at 80% 30%, rgba(28, 58, 99, 0.55), transparent 70%),
-    radial-gradient(50% 60% at 60% 80%, rgba(232, 196, 104, 0.18), transparent 70%);
-  animation: auroraMove 14s ease-in-out infinite alternate;
+    radial-gradient(40% 50% at 18% 22%, rgba(200, 148, 31, 0.13), transparent 70%),
+    radial-gradient(45% 55% at 82% 28%, rgba(255, 255, 255, 0.04), transparent 70%),
+    radial-gradient(50% 60% at 60% 85%, rgba(232, 196, 104, 0.08), transparent 70%);
+  animation: auroraMove 16s ease-in-out infinite alternate;
 }
 @keyframes auroraMove {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  100% { transform: translate3d(0, -3%, 0) scale(1.1); }
+  100% { transform: translate3d(0, -3%, 0) scale(1.12); }
 }
 
-/* Soft glass card */
+/* Glowing orb (use with absolute positioning + size classes) */
+.orb {
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(200, 148, 31, 0.28), rgba(200, 148, 31, 0.05) 60%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* Dark glass card */
+.glass-dark {
+  background: rgba(15, 15, 15, 0.45);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 .glass {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
-.glass-dark {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
 
-/* Shimmering gold border on hover */
+/* Card lift on hover — smooth expo easing like awwwards sites */
 .card-hover {
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.6s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.4s ease;
 }
 .card-hover:hover {
   transform: translateY(-8px);
-  box-shadow: 0 24px 50px -20px rgba(11, 31, 58, 0.35);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(200, 148, 31, 0.08);
 }
 
 /* Marquee track */
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 26s linear infinite;
+  animation: marquee 28s linear infinite;
 }
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -90,7 +124,7 @@ body {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-14px); }
 }
-.float { animation: float 6s ease-in-out infinite; }
+.float { animation: float 7s ease-in-out infinite; }
 
 /* Respect users who prefer less motion */
 @media (prefers-reduced-motion: reduce) {

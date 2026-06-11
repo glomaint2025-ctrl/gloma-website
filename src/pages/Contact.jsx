@@ -8,6 +8,9 @@ const info = [
   { icon: '📧', label: 'Email us', value: 'info@glomaint.com', href: 'mailto:info@glomaint.com' },
 ]
 
+const inputCls =
+  'w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/30 outline-none focus:ring-2 focus:ring-gold focus:border-transparent'
+
 export default function Contact() {
   const [sent, setSent] = useState(false)
 
@@ -19,29 +22,29 @@ export default function Contact() {
   }
 
   return (
-    <div>
+    <div className="bg-black">
       <PageHeader
         eyebrow="Let's Talk"
-        title="Book a Free Consultation"
+        title="Start Your Project"
         subtitle="Have a project in mind? Tell us about it — we'd love to help you grow."
       />
 
-      <section className="max-w-5xl mx-auto px-5 py-20 grid gap-12 md:grid-cols-2">
+      <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 grid gap-12 md:grid-cols-2">
         {/* Contact info */}
         <Reveal direction="right">
-          <h2 className="text-2xl font-bold mb-6">Get in touch</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-7">Get in touch</h2>
           <ul className="space-y-6">
             {info.map((item) => (
               <li key={item.label} className="flex items-start gap-4">
-                <span className="h-12 w-12 shrink-0 grid place-items-center rounded-xl bg-navy text-gold text-xl">
+                <span className="h-12 w-12 shrink-0 grid place-items-center rounded-2xl bg-gold/15 text-gold text-xl">
                   {item.icon}
                 </span>
                 <div>
-                  <div className="text-sm text-ink/50">{item.label}</div>
+                  <div className="text-sm text-soft">{item.label}</div>
                   {item.href ? (
-                    <a href={item.href} className="font-medium hover:text-gold">{item.value}</a>
+                    <a href={item.href} className="font-medium text-white hover:text-gold transition-colors">{item.value}</a>
                   ) : (
-                    <div className="font-medium">{item.value}</div>
+                    <div className="font-medium text-white">{item.value}</div>
                   )}
                 </div>
               </li>
@@ -52,45 +55,30 @@ export default function Contact() {
         {/* Form */}
         <Reveal direction="left" delay={0.15}>
           {sent ? (
-            <div className="glass rounded-2xl p-10 shadow-xl text-center border border-black/5">
+            <div className="glass-dark rounded-3xl p-10 text-center">
               <div className="text-5xl mb-3">🎉</div>
               <h3 className="text-xl font-bold">Thank you!</h3>
-              <p className="text-ink/60 mt-2">
+              <p className="text-soft mt-2">
                 Your message has been received. Our team will be in touch soon.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-xl space-y-4 border border-black/5">
+            <form onSubmit={handleSubmit} className="glass-dark rounded-3xl p-8 space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1.5">Your Name</label>
-                <input
-                  required
-                  type="text"
-                  className="w-full rounded-xl border border-black/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
-                  placeholder="John Doe"
-                />
+                <label className="block text-sm font-medium mb-1.5 text-white/80">Your Name</label>
+                <input required type="text" className={inputCls} placeholder="John Doe" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1.5">Email</label>
-                <input
-                  required
-                  type="email"
-                  className="w-full rounded-xl border border-black/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
-                  placeholder="you@example.com"
-                />
+                <label className="block text-sm font-medium mb-1.5 text-white/80">Email</label>
+                <input required type="email" className={inputCls} placeholder="you@example.com" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1.5">Message</label>
-                <textarea
-                  required
-                  rows={4}
-                  className="w-full rounded-xl border border-black/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
-                  placeholder="Tell us about your project..."
-                />
+                <label className="block text-sm font-medium mb-1.5 text-white/80">Message</label>
+                <textarea required rows={4} className={inputCls} placeholder="Tell us about your project..." />
               </div>
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-navy text-white font-semibold hover:bg-navy-light transition-all hover:scale-[1.02]"
+                className="w-full py-3.5 rounded-xl bg-gold text-black font-semibold hover:bg-gold-light transition-all hover:scale-[1.02]"
               >
                 Send Message
               </button>

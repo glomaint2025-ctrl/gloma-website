@@ -16,8 +16,8 @@ export default function Footer() {
   const socials = socialMap.filter((s) => settings?.[s.key])
 
   return (
-    <footer className="relative bg-navy-deep text-white/80 overflow-hidden">
-      <div className="absolute inset-0 aurora opacity-20" />
+    <footer className="relative bg-black-deep text-white/80 overflow-hidden border-t border-white/5">
+      <div className="absolute inset-0 aurora opacity-40" />
 
       <div className="relative max-w-6xl mx-auto px-5 py-16 grid gap-10 md:grid-cols-4">
         {/* Brand */}
@@ -43,7 +43,7 @@ export default function Footer() {
                   rel="noreferrer"
                   aria-label={s.label}
                   title={s.label}
-                  className="h-10 w-10 grid place-items-center rounded-full glass-dark hover:bg-gold hover:text-navy-deep transition-colors"
+                  className="h-10 w-10 grid place-items-center rounded-full glass-dark hover:bg-gold hover:text-black transition-colors"
                 >
                   <span aria-hidden>{s.icon}</span>
                 </a>

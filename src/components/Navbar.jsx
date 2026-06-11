@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
+// One-page flow: links jump to homepage sections (like thesocialsglobal.com)
 const links = [
-  { to: '/', label: 'Home' },
-  { to: '/work', label: 'Our Work' },
-  { to: '/videos', label: 'Videos' },
-  { to: '/campaigns', label: 'Campaigns' },
-  { to: '/testimonials', label: 'Testimonials' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/#work', label: 'Work' },
+  { to: '/#about', label: 'About' },
+  { to: '/#services', label: 'Services' },
+  { to: '/#videos', label: 'Videos' },
+  { to: '/#case-studies', label: 'Results' },
+  { to: '/#contact', label: 'Contact' },
 ]
 
 export default function Navbar() {
@@ -27,7 +28,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-navy-deep/90 backdrop-blur-md shadow-lg shadow-black/20 py-0'
+          ? 'bg-black/80 backdrop-blur-xl border-b border-white/10 py-0'
           : 'bg-transparent py-2'
       }`}
     >
@@ -44,27 +45,22 @@ export default function Navbar() {
         <ul className="hidden md:flex items-center gap-7">
           {links.map((link) => (
             <li key={link.to}>
-              <NavLink
+              <Link
                 to={link.to}
-                end={link.to === '/'}
-                className={({ isActive }) =>
-                  `text-sm font-medium transition-colors hover:text-gold ${
-                    isActive ? 'text-gold' : 'text-white/90'
-                  }`
-                }
+                className="text-sm font-medium transition-colors hover:text-gold text-white/90"
               >
                 {link.label}
-              </NavLink>
+              </Link>
             </li>
           ))}
         </ul>
 
         {/* CTA on desktop */}
         <Link
-          to="/contact"
-          className="hidden md:inline-block px-5 py-2 rounded-full bg-gold text-navy-deep text-sm font-semibold hover:bg-gold-light transition-colors"
+          to="/#contact"
+          className="hidden md:inline-block px-5 py-2 rounded-full bg-gold text-black text-sm font-semibold hover:bg-gold-light transition-colors tracking-wide"
         >
-          Let’s Talk
+          START YOUR PROJECT
         </Link>
 
         {/* Hamburger (phones only) */}
@@ -84,27 +80,24 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden overflow-hidden bg-navy-deep/95 backdrop-blur-md px-5"
+            className="md:hidden overflow-hidden bg-black/90 backdrop-blur-xl border-t border-white/10 px-5"
           >
             {links.map((link) => (
               <li key={link.to} className="border-b border-white/10 last:border-0">
-                <NavLink
+                <Link
                   to={link.to}
-                  end={link.to === '/'}
                   onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `block py-4 text-base font-medium ${isActive ? 'text-gold' : 'text-white'}`
-                  }
+                  className="block py-4 text-base font-medium text-white"
                 >
                   {link.label}
-                </NavLink>
+                </Link>
               </li>
             ))}
             <li className="py-4">
               <Link
                 to="/contact"
                 onClick={() => setOpen(false)}
-                className="block text-center px-5 py-3 rounded-full bg-gold text-navy-deep font-semibold"
+                className="block text-center px-5 py-3 rounded-full bg-gold text-black font-semibold"
               >
                 Let’s Talk
               </Link>

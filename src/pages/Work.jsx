@@ -17,22 +17,24 @@ export default function Work() {
   const shown = filter === 'all' ? items : items.filter((w) => w.media_type === filter)
 
   return (
-    <div>
+    <div className="bg-black">
       <PageHeader
         eyebrow="Portfolio"
         title="Our Work"
         subtitle="Reels, ads and graphic posts crafted for brands like yours."
       />
 
-      <section className="max-w-6xl mx-auto px-5 py-16">
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 md:py-24">
         {/* Filter tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
           {filters.map((f) => (
             <button
               key={f.key}
               onClick={() => setFilter(f.key)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                filter === f.key ? 'bg-navy text-white shadow-lg' : 'bg-white text-ink/70 hover:bg-black/5 border border-black/5'
+                filter === f.key
+                  ? 'bg-gold text-black shadow-lg shadow-gold/20'
+                  : 'glass-dark text-white/70 hover:text-white hover:bg-white/10'
               }`}
             >
               {f.label}
@@ -41,9 +43,9 @@ export default function Work() {
         </div>
 
         {loading ? (
-          <p className="text-center text-ink/50">Loading…</p>
+          <p className="text-center text-soft">Loading…</p>
         ) : shown.length === 0 ? (
-          <p className="text-center text-ink/50">Nothing here yet — check back soon! 🎬</p>
+          <p className="text-center text-soft">Nothing here yet — check back soon! 🎬</p>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" style={{ perspective: 1000 }}>
             {shown.map((w, i) => (

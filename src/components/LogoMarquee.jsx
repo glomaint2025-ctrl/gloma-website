@@ -9,14 +9,14 @@ export default function LogoMarquee({ clients }) {
         {doubled.map((c, i) => {
           const inner = c.logo_url ? (
             <img src={c.logo_url} alt={c.name}
-              className="h-12 md:h-16 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
+              className="h-16 md:h-20 w-auto object-contain rounded-2xl opacity-70 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 hover:scale-110" />
           ) : (
-            <span className="text-lg font-semibold text-ink/50 hover:text-navy transition-colors whitespace-nowrap">
+            <span className="text-lg font-semibold text-white/40 hover:text-white transition-colors whitespace-nowrap">
               {c.name}
             </span>
           )
           return (
-            <div key={i} className="shrink-0 px-8 grid place-items-center h-20">
+            <div key={i} className="shrink-0 px-8 grid place-items-center h-24">
               {c.website ? (
                 <a href={c.website} target="_blank" rel="noreferrer">{inner}</a>
               ) : inner}

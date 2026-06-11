@@ -8,10 +8,17 @@ import ScrollProgress from './ScrollProgress'
 export default function PublicLayout() {
   const location = useLocation()
 
-  // Scroll to top when navigating between pages
+  // On navigation: jump to the #section if there is one, else go to top
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [location.pathname])
+    if (location.hash) {
+      // wait one tick so the page has rendered
+      setTimeout(() => {
+        document.querySelector(location.hash)?.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [location.pathname, location.hash])
 
   return (
     <div className="min-h-screen flex flex-col">
