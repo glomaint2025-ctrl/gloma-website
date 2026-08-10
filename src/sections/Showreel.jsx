@@ -35,7 +35,7 @@ export default function Showreel({ videoSrc }) {
   }, [reducedMotion])
 
   return (
-    <section ref={sectionRef} id="showreel" className="relative bg-[#0A0A0F] py-24 md:py-32 overflow-hidden scroll-mt-20">
+    <section ref={sectionRef} id="showreel" className="relative py-24 md:py-32 overflow-hidden scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-10">
         <span className="section-label text-white/60">Showreel</span>
         <h2 className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight text-white">

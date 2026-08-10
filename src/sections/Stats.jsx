@@ -13,7 +13,7 @@ export default function Stats() {
   ]
 
   return (
-    <section className="relative bg-[#0A0A0F] py-24 md:py-28 border-y border-white/5">
+    <section className="relative py-24 md:py-28 border-y border-white/10">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
         {stats.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.08}>

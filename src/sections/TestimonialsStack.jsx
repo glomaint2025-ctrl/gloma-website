@@ -15,7 +15,7 @@ export default function TestimonialsStack() {
   const testimonials = items.length > 0 ? items : placeholders
 
   return (
-    <section id="testimonials" className="relative bg-[#0A0A0F] py-24 md:py-32 scroll-mt-20">
+    <section id="testimonials" className="relative py-24 md:py-32 scroll-mt-20">
       <div className="max-w-4xl mx-auto px-6 mb-16 text-center">
         <Reveal>
           <div>

@@ -41,7 +41,7 @@ export default function FooterCTA() {
   }, [reducedMotion])
 
   return (
-    <section ref={sectionRef} className="relative bg-[#0A0A0F] overflow-hidden py-28 md:py-40">
+    <section ref={sectionRef} className="relative overflow-hidden py-28 md:py-40">
       {!isMobile && (
         <div className="absolute inset-0 opacity-60">
           <FooterScene />

@@ -1,33 +1,93 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Hero from '../sections/Hero'
 import Services, { services } from '../sections/Services'
 import Works from '../sections/Works'
 import Showreel from '../sections/Showreel'
-import MarqueeStrip from '../sections/MarqueeStrip'
 import TestimonialsStack from '../sections/TestimonialsStack'
 import Stats from '../sections/Stats'
 import FooterCTA from '../sections/FooterCTA'
 import Reveal from '../components/Reveal'
+import { usePrefersReducedMotion } from '../lib/usePrefersReducedMotion'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Home() {
+  const wrapRef = useRef(null)
+  const videoRef = useRef(null)
+  const reducedMotion = usePrefersReducedMotion()
+
+  // One video, scrubbed across the ENTIRE page's scroll progress — not
+  // pinned to any one section, just a living backdrop behind everything.
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (reducedMotion) {
+      video.pause()
+      return
+    }
+
+    let trigger = null
+    let onLoadedMeta = null
+
+    const startScrub = () => {
+      video.pause()
+      trigger = ScrollTrigger.create({
+        trigger: wrapRef.current,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.6,
+        onUpdate: (self) => {
+          const duration = video.duration || 0
+          if (duration) video.currentTime = self.progress * duration
+        },
+      })
+    }
+
+    if (video.readyState >= 1) {
+      startScrub()
+    } else {
+      onLoadedMeta = startScrub
+      video.addEventListener('loadedmetadata', onLoadedMeta, { once: true })
+    }
+
+    return () => {
+      trigger?.kill()
+      if (onLoadedMeta) video.removeEventListener('loadedmetadata', onLoadedMeta)
+    }
+  }, [reducedMotion])
+
   return (
-    <div className="bg-[#0A0A0F]">
-      <Hero />
-      <MarqueeStrip />
-      <Services />
-      <Works />
-      <Showreel />
-      <TestimonialsStack />
-      <Stats />
-      <Contact />
-      <FooterCTA />
+    <div ref={wrapRef} className="relative bg-[#0A0A0F]">
+      <video
+        ref={videoRef}
+        src="/videos/hero.mp4"
+        muted
+        playsInline
+        preload="auto"
+        className="fixed inset-0 w-full h-full object-cover z-0"
+      />
+      <div className="fixed inset-0 bg-black/45 z-[1]" />
+
+      <div className="relative z-10">
+        <Hero />
+        <Services />
+        <Works />
+        <Showreel />
+        <TestimonialsStack />
+        <Stats />
+        <Contact />
+        <FooterCTA />
+      </div>
     </div>
   )
 }
 
 function Contact() {
   return (
-    <section id="contact" className="relative bg-[#0A0A0F] border-t border-white/5 scroll-mt-20">
+    <section id="contact" className="relative border-t border-white/10 scroll-mt-20">
       <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-24 md:py-32">
         <Reveal>
           <div className="mb-14">

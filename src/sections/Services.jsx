@@ -54,7 +54,7 @@ export default function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative bg-[#0A0A0F] overflow-hidden py-24 md:py-0 scroll-mt-20"
+      className="relative overflow-hidden py-24 md:py-0 scroll-mt-20"
     >
       <div className={pinned ? 'md:h-screen md:flex md:items-center' : ''}>
         <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">

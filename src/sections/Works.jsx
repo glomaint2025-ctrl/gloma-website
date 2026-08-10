@@ -25,7 +25,7 @@ export default function Works() {
   const [active, setActive] = useState(null)
 
   return (
-    <section id="work" className="relative bg-[#0A0A0F] py-24 md:py-32 scroll-mt-20">
+    <section id="work" className="relative py-24 md:py-32 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <Reveal>
           <div className="mb-16">

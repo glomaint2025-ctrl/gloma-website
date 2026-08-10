@@ -1,60 +1,33 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import HeroScene from '../three/HeroScene'
-import { useIsMobile } from '../lib/useIsMobile'
 import { usePrefersReducedMotion } from '../lib/usePrefersReducedMotion'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const words = ['Your', 'Partner', 'in', 'Digital', 'Evolution']
 
+// The scroll-scrubbed background video lives once, globally, in Home.jsx —
+// this section is just the headline/CTA overlay sitting on top of it.
 export default function Hero() {
   const sectionRef = useRef(null)
-  const canvasWrapRef = useRef(null)
   const wordsRef = useRef([])
-  const isMobile = useIsMobile()
   const reducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
+    if (reducedMotion) return
     const ctx = gsap.context(() => {
-      if (reducedMotion) return
-
       gsap.fromTo(
         wordsRef.current,
         { yPercent: 120 },
         { yPercent: 0, duration: 1, ease: 'power4.out', stagger: 0.08, delay: 0.3 }
       )
-
-      if (canvasWrapRef.current) {
-        gsap.to(canvasWrapRef.current, {
-          scale: 1.35,
-          y: 120,
-          opacity: 0.4,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-          },
-        })
-      }
     }, sectionRef)
-
     return () => ctx.revert()
   }, [reducedMotion])
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[100svh] flex items-center overflow-hidden bg-[#0A0A0F] text-white"
+      className="relative min-h-[100svh] flex items-center overflow-hidden text-white"
     >
-      <div ref={canvasWrapRef} className="absolute inset-0">
-        {!isMobile ? <HeroScene /> : <div className="absolute inset-0 accent-glow" />}
-      </div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(10,10,15,0.9)_100%)]" />
-
       <div className="relative max-w-5xl mx-auto px-6 text-center">
         <span className="section-label text-white/60">Gloma International — Creative Tech &amp; Content Studio</span>
 
