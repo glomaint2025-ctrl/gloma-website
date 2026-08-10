@@ -1,0 +1,19 @@
+# Make sure the Authorization header reaches PHP (some Apache/cPanel setups strip it).
+<IfModule mod_setenvif.c>
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag cgi.fix_pathinfo Off
+</IfModule>
+CGIPassAuth On
+
+# Block direct access to sensitive files (Apache 2.4 + 2.2 syntax).
+<FilesMatch "^(config\.php|bootstrap\.php|db\.php|jwt\.php|cors\.php|helpers\.php)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

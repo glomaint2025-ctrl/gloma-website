@@ -1,35 +1,47 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { supabase } from './supabase'
+import { apiGet, apiPost, getToken, setToken } from './api'
 
 const AuthContext = createContext(null)
 
 // Wraps the app and keeps track of whether an admin is logged in.
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(!!getToken())
 
   useEffect(() => {
-    // Check if already logged in when the app loads
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session)
-      setLoading(false)
-    })
-
-    // Listen for login / logout changes
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-    return () => sub.subscription.unsubscribe()
+    const token = getToken()
+    if (!token) return
+    apiGet('/auth/me.php')
+      .then((data) => {
+        setSession(token)
+        setUser(data.user)
+      })
+      .catch(() => {
+        setToken(null)
+      })
+      .finally(() => setLoading(false))
   }, [])
 
-  const value = {
-    session,
-    user: session?.user ?? null,
-    loading,
-    signIn: (email, password) =>
-      supabase.auth.signInWithPassword({ email, password }),
-    signOut: () => supabase.auth.signOut(),
+  async function signIn(email, password) {
+    try {
+      const data = await apiPost('/auth/login.php', { email, password })
+      setToken(data.token)
+      setSession(data.token)
+      setUser(data.user)
+      return { error: null }
+    } catch (err) {
+      return { error: { message: err.message } }
+    }
   }
+
+  async function signOut() {
+    setToken(null)
+    setSession(null)
+    setUser(null)
+  }
+
+  const value = { session, user, loading, signIn, signOut }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { apiGet } from '../lib/api'
 
 const cards = [
   { table: 'works', label: 'Works', icon: '🎬', to: '/admin/works', color: 'bg-blue-500' },
@@ -15,10 +15,7 @@ export default function Dashboard() {
   const [counts, setCounts] = useState({})
 
   useEffect(() => {
-    cards.forEach(async (c) => {
-      const { count } = await supabase.from(c.table).select('*', { count: 'exact', head: true })
-      setCounts((prev) => ({ ...prev, [c.table]: count ?? 0 }))
-    })
+    apiGet('/counts.php').then(setCounts).catch(() => {})
   }, [])
 
   return (

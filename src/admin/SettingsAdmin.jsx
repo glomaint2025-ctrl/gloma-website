@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { apiGet, apiPut } from '../lib/api'
 
 const socialFields = [
   { key: 'facebook_url', label: 'Facebook URL', placeholder: 'https://facebook.com/yourpage' },
@@ -22,7 +22,7 @@ export default function SettingsAdmin() {
   const [saved, setSaved] = useState(false)
 
   useEffect(() => {
-    supabase.from('site_settings').select('*').eq('id', 1).single().then(({ data }) => setForm(data))
+    apiGet('/settings.php').then(setForm)
   }, [])
 
   function set(key, value) {
@@ -32,9 +32,8 @@ export default function SettingsAdmin() {
 
   async function handleSave() {
     setSaving(true)
-    const { error } = await supabase
-      .from('site_settings')
-      .update({
+    try {
+      await apiPut('/settings.php', {
         facebook_url: form.facebook_url,
         instagram_url: form.instagram_url,
         youtube_url: form.youtube_url,
@@ -44,12 +43,13 @@ export default function SettingsAdmin() {
         stat_projects: Number(form.stat_projects) || 0,
         stat_team: Number(form.stat_team) || 0,
         stat_satisfaction: Number(form.stat_satisfaction) || 0,
-        updated_at: new Date().toISOString(),
       })
-      .eq('id', 1)
-    setSaving(false)
-    if (error) alert('Error: ' + error.message)
-    else setSaved(true)
+      setSaved(true)
+    } catch (err) {
+      alert('Error: ' + err.message)
+    } finally {
+      setSaving(false)
+    }
   }
 
   if (!form) return <p className="text-ink/60">Loading…</p>

@@ -13,6 +13,11 @@
   --color-gold: #c8941f;
   --color-gold-light: #e8c468;
 
+  /* New cinematic accent (hero/services/works/footer redesign) */
+  --color-bg-deep: #0A0A0F;
+  --color-accent-violet: #7C3AED;
+  --color-accent-cyan: #22D3EE;
+
   /* Light tokens (still used by the admin dashboard) */
   --color-navy: #0b1f3a;
   --color-navy-deep: #071528;
@@ -128,5 +133,63 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Respect users who prefer less motion */
 @media (prefers-reduced-motion: reduce) {
-  .aurora, .marquee-track, .float { animation: none !important; }
+  .aurora, .marquee-track, .float, .noise-overlay { animation: none !important; }
 }
+
+/* ===== Cinematic redesign additions ===== */
+
+/* Violet -> cyan gradient text, used alongside .text-gradient (gold) */
+.text-gradient-accent {
+  background: linear-gradient(100deg, var(--color-accent-violet), var(--color-accent-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft glow behind hero/footer 3D scenes */
+.accent-glow {
+  background:
+    radial-gradient(45% 55% at 30% 30%, rgba(124, 58, 237, 0.35), transparent 70%),
+    radial-gradient(50% 60% at 75% 65%, rgba(34, 211, 238, 0.25), transparent 70%);
+  filter: blur(60px);
+}
+
+/* Hide the native cursor once CustomCursor takes over (desktop, non-reduced-motion only) */
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+/* Film-grain overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  animation: grain 1s steps(4) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, -3%); }
+  50% { transform: translate(2%, 3%); }
+  75% { transform: translate(-1%, 2%); }
+}
+
+/* Outlined (stroke-only) huge marquee typography */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5);
+}
+
+/* Word-mask used by the hero headline reveal */
+.word-mask {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+}
+

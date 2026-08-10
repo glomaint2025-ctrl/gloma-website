@@ -4,11 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 // One-page flow: links jump to homepage sections (like thesocialsglobal.com)
 const links = [
-  { to: '/#work', label: 'Work' },
-  { to: '/#about', label: 'About' },
   { to: '/#services', label: 'Services' },
-  { to: '/#videos', label: 'Videos' },
-  { to: '/#case-studies', label: 'Results' },
+  { to: '/#work', label: 'Work' },
+  { to: '/#showreel', label: 'Showreel' },
+  { to: '/#testimonials', label: 'Reviews' },
   { to: '/#contact', label: 'Contact' },
 ]
 
