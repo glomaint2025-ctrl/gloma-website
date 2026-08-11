@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useState } from 'react'
 import Hero from '../sections/Hero'
 import Services, { services } from '../sections/Services'
 import Works from '../sections/Works'
@@ -9,78 +7,18 @@ import TestimonialsStack from '../sections/TestimonialsStack'
 import Stats from '../sections/Stats'
 import FooterCTA from '../sections/FooterCTA'
 import Reveal from '../components/Reveal'
-import { usePrefersReducedMotion } from '../lib/usePrefersReducedMotion'
-
-gsap.registerPlugin(ScrollTrigger)
 
 export default function Home() {
-  const wrapRef = useRef(null)
-  const videoRef = useRef(null)
-  const reducedMotion = usePrefersReducedMotion()
-
-  // One video, scrubbed across the ENTIRE page's scroll progress — not
-  // pinned to any one section, just a living backdrop behind everything.
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    if (reducedMotion) {
-      video.pause()
-      return
-    }
-
-    let trigger = null
-    let onLoadedMeta = null
-
-    const startScrub = () => {
-      video.pause()
-      trigger = ScrollTrigger.create({
-        trigger: wrapRef.current,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.6,
-        onUpdate: (self) => {
-          const duration = video.duration || 0
-          if (duration) video.currentTime = self.progress * duration
-        },
-      })
-    }
-
-    if (video.readyState >= 1) {
-      startScrub()
-    } else {
-      onLoadedMeta = startScrub
-      video.addEventListener('loadedmetadata', onLoadedMeta, { once: true })
-    }
-
-    return () => {
-      trigger?.kill()
-      if (onLoadedMeta) video.removeEventListener('loadedmetadata', onLoadedMeta)
-    }
-  }, [reducedMotion])
-
   return (
-    <div ref={wrapRef} className="relative bg-[#0A0A0F]">
-      <video
-        ref={videoRef}
-        src="/videos/hero.mp4"
-        muted
-        playsInline
-        preload="auto"
-        className="fixed inset-0 w-full h-full object-cover z-0"
-      />
-      <div className="fixed inset-0 bg-black/45 z-[1]" />
-
-      <div className="relative z-10">
-        <Hero />
-        <Services />
-        <Works />
-        <Showreel />
-        <TestimonialsStack />
-        <Stats />
-        <Contact />
-        <FooterCTA />
-      </div>
+    <div>
+      <Hero />
+      <Services />
+      <Works />
+      <Showreel />
+      <TestimonialsStack />
+      <Stats />
+      <Contact />
+      <FooterCTA />
     </div>
   )
 }

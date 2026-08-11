@@ -27,6 +27,7 @@
 
   --font-display: "Inter", system-ui, sans-serif;
   --font-heading: "Outfit", sans-serif;
+  --font-serif: "Fraunces", serif;
 }
 
 * {
@@ -49,6 +50,11 @@ body {
 /* Big bold display headings everywhere */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+}
+
+/* Serif display font for big emotional headlines (hero tagline, section titles) */
+.font-serif {
+  font-family: var(--font-serif);
 }
 
 /* ===== Premium helpers ===== */
